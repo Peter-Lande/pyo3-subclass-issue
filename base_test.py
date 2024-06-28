@@ -2,12 +2,15 @@ import test_sub
 
 class Sub(test_sub.Base):
     def __init__(self):
-        super().__init__()
         pass
-    def super_call(self):
-        print("Subclass Call.")
+    def first_call(self):
+        print("First Subclass Call.")
+    def second_call(self):
+        print("Second Subclass Call.")
 
-caller = test_sub.Caller(Sub())
-caller.call_inner()
 a = Sub()
-a.super_call()
+a.first_call()
+a.second_call()
+caller = test_sub.Caller(a)
+caller.call_first_inner()
+caller.call_second_inner()

@@ -10,8 +10,12 @@ impl Base {
         Base
     }
 
-    fn super_call(&self) {
-        println!("Baseclass call.");
+    fn first_call(&self) {
+        println!("First Baseclass call.");
+    }
+
+    fn second_call(_self: &Bound<'_, Self>) {
+        println!("Second Baseclass call.");
     }
 }
 
@@ -32,10 +36,12 @@ impl Caller {
         self.inner.clone().into_bound(py)
     }
 
-    fn call_inner(&self) {
-        Python::with_gil(|py| {
-            self.inner.borrow(py).super_call();
-        });
+    fn call_first_inner(&self, py: Python<'_>) {
+        self.inner.borrow(py).first_call();
+    }
+
+    fn call_second_inner(&self, py: Python<'_>) {
+        Base::second_call(self.inner.bind(py));
     }
 }
 
