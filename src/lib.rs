@@ -14,8 +14,12 @@ impl Base {
         println!("First Baseclass call.");
     }
 
-    fn second_call(_self: &Bound<'_, Self>) {
+    fn second_call(&self) {
         println!("Second Baseclass call.");
+    }
+
+    fn third_call(&self) {
+        println!("Third Baseclass call.");
     }
 }
 
@@ -41,7 +45,11 @@ impl Caller {
     }
 
     fn call_second_inner(&self, py: Python<'_>) {
-        Base::second_call(self.inner.bind(py));
+        let _ = self.inner.call_method0(py, "second_call");
+    }
+
+    fn call_third_inner(&self, py: Python<'_>) {
+        let _ = self.inner.call_method0(py, "third_call");
     }
 }
 
